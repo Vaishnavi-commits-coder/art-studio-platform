@@ -3,6 +3,8 @@ import confetti from "canvas-confetti";
 
 const API = "http://localhost:5000/api";
 
+const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80";
+
 const GLAZE_PROPERTIES = {
   "Matte White": { color: "#F3F4F6", text: "#1F2937", border: "#D1D5DB" },
   "Cobalt Blue": { color: "#1D4ED8", text: "#FFFFFF", border: "#1E40AF" },
@@ -571,7 +573,12 @@ export default function App() {
                     style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.9)" }}
                   />
                   <div style={{ position: "absolute", top: "25%", width: 140, boxShadow: "0 14px 28px rgba(0,0,0,0.45)", border: "4px solid #1E2D24" }}>
-                    <img src={selectedPainting.imageUrl} alt={selectedPainting.title} style={{ width: "100%", display: "block" }} />
+                    <img 
+                      src={selectedPainting.imageUrl} 
+                      alt={selectedPainting.title} 
+                      onError={(e) => { e.target.onerror = null; e.target.src = FALLBACK_IMAGE; }}
+                      style={{ width: "100%", display: "block" }} 
+                    />
                   </div>
                   <span style={{ position: "absolute", bottom: 10, left: 14, background: "rgba(0,0,0,0.6)", color: "white", padding: "4px 8px", borderRadius: 6, fontSize: 11 }}>
                     Living Room Scale Preview
@@ -579,7 +586,12 @@ export default function App() {
                 </div>
               ) : (
                 <>
-                  <img src={selectedPainting.imageUrl} alt={selectedPainting.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  <img 
+                    src={selectedPainting.imageUrl} 
+                    alt={selectedPainting.title} 
+                    onError={(e) => { e.target.onerror = null; e.target.src = FALLBACK_IMAGE; }}
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+                  />
                   <span className={`badge badge-${selectedPainting.status}`} style={{ position: "absolute", top: 12, right: 12 }}>
                     {selectedPainting.status}
                   </span>
@@ -755,7 +767,12 @@ export default function App() {
                     style={{ position: "relative", height: 210, background: "#E8F5E9", cursor: "pointer" }}
                     onClick={() => setSelectedPainting(p)}
                   >
-                    <img src={p.imageUrl} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    <img 
+                      src={p.imageUrl} 
+                      alt={p.title} 
+                      onError={(e) => { e.target.onerror = null; e.target.src = FALLBACK_IMAGE; }}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+                    />
                     <span className={`badge badge-${p.status}`} style={{ position: "absolute", top: 12, right: 12 }}>
                       {p.status}
                     </span>
